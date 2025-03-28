@@ -27,6 +27,7 @@ const TimeSeriesChart = () => {
 
     const options: ChartOptions<'line'> = {
         responsive: true,
+        maintainAspectRatio: false,
         parsing: false, // You want to handle x/y object data
         scales: {
             x: {

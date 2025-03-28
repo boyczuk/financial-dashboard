@@ -1,6 +1,7 @@
+import BarChart from '../components/BarChart';
 import PieChart from '../components/PieChart';
 import TimeSeriesChart from '../components/TimeSeriesChart';
-import './Home.css';
+import './styles/Home.css';
 
 function Home() {
 
@@ -20,8 +21,8 @@ function Home() {
                     <div className="spending-pie">
                         <PieChart />
                     </div>
-                    <div className="spending-pie">
-                        <PieChart />
+                    <div className="bar-wrapper">
+                        <BarChart />
                     </div>
                 </div>
 

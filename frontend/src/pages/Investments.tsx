@@ -1,6 +1,7 @@
 import PieChart from '../components/PieChart';
+import EnhancedTable from '../components/TableTemp';
 import TimeSeriesChart from '../components/TimeSeriesChart';
-import './Home.css';
+import './styles/Investments.css';
 
 function Investments() {
 
@@ -16,13 +17,8 @@ function Investments() {
                     <TimeSeriesChart />
                 </div>
 
-                <div className="smaller-charts">
-                    <div className="spending-pie">
-                        <PieChart />
-                    </div>
-                    <div className="spending-pie">
-                        <PieChart />
-                    </div>
+                <div className='top-performers'>
+                    <EnhancedTable />
                 </div>
 
 

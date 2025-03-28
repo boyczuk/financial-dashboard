@@ -1,0 +1,51 @@
+.home-page {
+    justify-content: center;
+    align-items: center;
+}
+
+
+.header {
+    text-align: left;
+    padding: 1%;
+}
+
+.content {
+    display: flex;
+    gap: 20px;
+    padding: 1%;
+    justify-content: center;
+}
+
+.spending-total {
+    flex: 2;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    width: 80rem;
+    height: 40rem;
+}
+
+.spending-pie {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 250px;
+    aspect-ratio: 1;
+}
+
+.smaller-charts {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+.bar-wrapper {
+    height: 40rem;
+    width: 100%;
+  }

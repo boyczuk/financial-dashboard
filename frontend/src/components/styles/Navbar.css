@@ -12,6 +12,14 @@
     font-size: 3rem !important;
 }
 
+.navbar-icon-highlight {
+    font-size: 3rem !important;
+    color: #1976d2;
+    transform: scale(1.1);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
 .navbar-icon:hover {
     color: #1976d2;
     transform: scale(1.1);

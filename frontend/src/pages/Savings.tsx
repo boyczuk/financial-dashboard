@@ -1,6 +1,6 @@
 import PieChart from '../components/PieChart';
 import TimeSeriesChart from '../components/TimeSeriesChart';
-import './Home.css';
+import './styles/Savings.css';
 
 function Savings() {
 

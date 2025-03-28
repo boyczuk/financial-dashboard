@@ -13,6 +13,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 const PieChart: React.FC = () => {
   const data = {
     labels: ['Groceries', 'Dining Out', 'Subscriptions', 'Misc'],
+    maintainAspectRatio: false,
     datasets: [
       {
         label: 'Spending by Category',
