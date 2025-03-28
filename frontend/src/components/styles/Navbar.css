@@ -1,0 +1,20 @@
+.navbar {
+    margin-top: 4%;
+    width: 7%;
+    margin-right: 3%;
+}
+
+.navbar li {
+    list-style: none;
+}
+
+.navbar-icon {
+    font-size: 3rem !important;
+}
+
+.navbar-icon:hover {
+    color: #1976d2;
+    transform: scale(1.1);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
