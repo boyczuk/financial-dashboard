@@ -1,0 +1,9 @@
+.goals {
+    display: flex;
+    gap: 20px;
+}
+
+.goal {
+    background-color: rgb(200, 200, 200);
+    padding: 1%;
+}

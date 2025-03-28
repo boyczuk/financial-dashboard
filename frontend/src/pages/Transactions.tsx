@@ -1,5 +1,7 @@
 import PieChart from '../components/PieChart';
 import TimeSeriesChart from '../components/TimeSeriesChart';
+import EnhancedTable from '../components/TopInvestments';
+import TransactionTable from '../components/TransactionsTable';
 import './styles/Transactions.css';
 
 function Transactions() {
@@ -12,23 +14,7 @@ function Transactions() {
             </div>
 
             <div className="content">
-                <div className="spending-total">
-                    <TimeSeriesChart />
-                </div>
-
-                <div className="smaller-charts">
-                    <div className="spending-pie">
-                        <PieChart />
-                    </div>
-                    <div className="spending-pie">
-                        <PieChart />
-                    </div>
-                </div>
-
-
-                {/*<div className="insights">
-                    <p>Maybe add GPT based insights here | or most spend items</p>
-                </div>*/}
+                <TransactionTable />
             </div>
         </div>
     )

@@ -1,5 +1,5 @@
 import PieChart from '../components/PieChart';
-import EnhancedTable from '../components/TableTemp';
+import EnhancedTable from '../components/TopInvestments';
 import TimeSeriesChart from '../components/TimeSeriesChart';
 import './styles/Investments.css';
 
