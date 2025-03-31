@@ -1,37 +1,56 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import {
     Table, TableBody, TableCell, TableContainer,
     TableHead, TableRow, Paper
 } from '@mui/material';
 
-interface Transaction {
+import { DEV_AUTH } from '../constants';
+
+type Transaction = {
     id: number;
-    description: string;
-    amount: number;
+    name: string;
     date: string;
-    category: string;
+    amount: number;
 }
 
-const transactions: Transaction[] = [
-    { id: 1, description: "Starbucks", amount: -6.45, date: "2025-03-01", category: "Dining" },
-    { id: 2, description: "Paycheque Deposit", amount: 2400.00, date: "2025-03-01", category: "Income" },
-    { id: 3, description: "Spotify", amount: -10.99, date: "2025-03-02", category: "Subscriptions" },
-    { id: 4, description: "Grocery Store", amount: -92.34, date: "2025-03-03", category: "Groceries" },
-    { id: 5, description: "Wealthsimple Trade Deposit", amount: -300.00, date: "2025-03-03", category: "Investments" },
-    { id: 6, description: "Uber", amount: -18.70, date: "2025-03-04", category: "Transport" },
-    { id: 7, description: "Freelance Payout", amount: 600.00, date: "2025-03-04", category: "Income" },
-    { id: 8, description: "Netflix", amount: -15.49, date: "2025-03-05", category: "Subscriptions" },
-    { id: 9, description: "Electric Bill", amount: -120.22, date: "2025-03-06", category: "Utilities" },
-    { id: 10, description: "Restaurant", amount: -55.80, date: "2025-03-06", category: "Dining" },
-];
-
-
 const TransactionTable = () => {
+    const [transactions, setTransactions] = useState<Transaction[]>([]);
+
+    const startDate: string = "2025-01-01";
+    const endDate: string = "2025-03-31";
+
+    useEffect(() => {
+        const fetchTransactions = async () => {
+            try {
+                const response = await axios.get<Transaction[]>(`/api/transactions?startDate=${startDate}&endDate=${endDate}`, {
+                    auth: DEV_AUTH,
+                });
+                const transactions = response.data;
+
+                setTransactions(transactions);
+
+                const amounts = transactions.map(tx => tx.amount);
+                // find a way to organize these, probably on backend to sort through and optimize or whatever using regex maybe?
+                const names = transactions.map(tx => tx.name);
+
+                console.log(transactions);
+
+
+            } catch (err) {
+                console.error(err);
+            }
+
+
+        }
+
+        fetchTransactions();
+    }, []);
 
     return (
-        <TableContainer component={Paper}>
-            <Table aria-label="stock table">
+        <TableContainer component={Paper} className='table-whole'>
+            <Table stickyHeader aria-label="stock table">
                 <TableHead>
                     <TableRow>
                         <TableCell><strong>Desc</strong></TableCell>
@@ -40,13 +59,13 @@ const TransactionTable = () => {
                         <TableCell><strong>Category</strong></TableCell>
                     </TableRow>
                 </TableHead>
-                <TableBody>
+                <TableBody className='table-body'>
                     {transactions.map((transaction) => (
                         <TableRow key={transaction.id}>
-                            <TableCell>{transaction.description}</TableCell>
-                            <TableCell>{transaction.amount}</TableCell>
+                            <TableCell>{transaction.name}</TableCell>
+                            <TableCell>${transaction.amount}</TableCell>
                             <TableCell>{transaction.date}</TableCell>
-                            <TableCell>{transaction.category}</TableCell>
+                            <TableCell>temp category</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

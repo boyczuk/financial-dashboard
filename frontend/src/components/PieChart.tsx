@@ -10,6 +10,8 @@ import {
 	ChartData,
 } from 'chart.js';
 
+import { DEV_AUTH } from '../constants';
+
 // Register necessary chart elements
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -18,13 +20,6 @@ type Transaction = {
 	name: string;
 	date: string;
 	amount: number;
-}
-
-const username = process.env.SPRING_BOOT_USER;
-const password = process.env.SPRING_BOOT_PASSWORD;
-
-if (!username || !password) {
-	throw new Error("Missing username or password from env file");
 }
 
 const PieChart = () => {
@@ -41,10 +36,7 @@ const PieChart = () => {
 		const fetchTransactions = async () => {
 			try {
 				const response = await axios.get<Transaction[]>(`/api/transactions?startDate=${startDate}&endDate=${endDate}`, {
-					auth: {
-						username: username,
-						password: password,
-					},
+					auth: DEV_AUTH,
 				});
 				const transactions = response.data;
 

@@ -3,6 +3,9 @@
     align-items: center;
 }
 
+.table-whole {
+    max-height: 80vh;
+}
 
 .header {
     text-align: left;
