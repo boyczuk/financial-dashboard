@@ -11,6 +11,12 @@ import com.boyczuk.financetracker.service.CSVImportService;
 
 @RestController
 public class CollectData {
+
+    private final CSVImportService csvImportService;
+
+    public CollectData(CSVImportService csvImportService) {
+        this.csvImportService = csvImportService;
+    }
     
     @GetMapping("/api/collect")
     public String getData() {
@@ -24,7 +30,6 @@ public class CollectData {
 
     @GetMapping("/api/import")
     public ResponseEntity<String> getImportCSV() {
-        CSVImportService csvImportService = new CSVImportService();
         InputStream inputStream = csvImportService.importCSV();
         csvImportService.saveToDB(inputStream);
         return ResponseEntity.ok("Import triggered");

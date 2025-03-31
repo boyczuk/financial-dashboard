@@ -16,6 +16,8 @@ public class Transaction {
     public String name;
     public double amount;
 
+    public Transaction() {}
+
     public Transaction(String dateString, String name, double amount) {
         this.date = LocalDate.parse(dateString);
         this.name = name;
