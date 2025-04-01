@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.boyczuk.financetracker.service.CSVImportService;
+import com.boyczuk.financetracker.model.Networth;
 import com.boyczuk.financetracker.model.Transaction;
+import com.boyczuk.financetracker.repository.NetworthRepository;
 import com.boyczuk.financetracker.repository.TransactionRepository;
 
 @RestController
@@ -20,10 +22,13 @@ public class CollectData {
 
     private final CSVImportService csvImportService;
     private final TransactionRepository transactionRepository;
+    private final NetworthRepository networthRepository;
 
-    public CollectData(CSVImportService csvImportService, TransactionRepository transactionRepository) {
+    public CollectData(CSVImportService csvImportService, TransactionRepository transactionRepository,
+            NetworthRepository networthRepository) {
         this.csvImportService = csvImportService;
         this.transactionRepository = transactionRepository;
+        this.networthRepository = networthRepository;
     }
 
     @GetMapping("/api/collect")
@@ -47,6 +52,13 @@ public class CollectData {
     public List<Transaction> getTransactionsInRange(
             @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
             @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
-                return transactionRepository.findByDateBetween(start, end);
+        return transactionRepository.findByDateBetween(start, end);
+    }
+
+    @GetMapping("/api/networth")
+    public List<Networth> getNetworthHistory(
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+        return networthRepository.findByDateBetween(start, end);
     }
 }
