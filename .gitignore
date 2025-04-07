@@ -56,6 +56,7 @@ HELP.md
 .DS_Store
 Thumbs.db
 backend/src/main/resources/cibc.csv
+backend/src/main/resources/cibc2.csv
 
 docker-compose.yml
 application.properties

@@ -54,7 +54,7 @@ const TimeSeriesChart = () => {
 
         const fetchNetworth = async () => {
             try {
-                const response = await axios.get<Networth[]>(`/api/transactions?startDate=${startDate}&endDate=${endDate}`, {
+                const response = await axios.get<Networth[]>(`/api/networthHistory?startDate=${startDate}&endDate=${endDate}`, {
                     auth: DEV_AUTH,
                 });
                 const networthHistory = response.data;

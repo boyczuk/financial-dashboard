@@ -8,26 +8,22 @@ import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import com.boyczuk.financetracker.model.Transaction;
 import com.boyczuk.financetracker.repository.TransactionRepository;
-import com.boyczuk.financetracker.model.Networth;
-import com.boyczuk.financetracker.repository.NetworthRepository;
+
 
 @Service
 public class CSVImportService {
 
     private final TransactionRepository transactionRepository;
-    private final NetworthRepository networthRepository;
 
-    public CSVImportService(TransactionRepository transactionRepository, NetworthRepository networthRepository) {
+    public CSVImportService(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
-        this.networthRepository = networthRepository;
     }
 
     public InputStream importCSV() {
-        return getClass().getClassLoader().getResourceAsStream("cibc.csv");
+        return getClass().getClassLoader().getResourceAsStream("cibc2.csv");
     }
 
     public void saveToDB(InputStream inputStream) {
-        double networth = 0;
 
         try (CSVReader reader = new CSVReader(new InputStreamReader(inputStream))) {
             String[] parts;
@@ -58,10 +54,7 @@ public class CSVImportService {
                 transactionRepository.save(transaction);
                 System.out.println(transaction.name + ": " + transaction.amount);
 
-                networth += transaction.amount;
-                Networth networthItem = new Networth(dateString, networth);
-                networthRepository.save(networthItem);
-                System.out.println(networthItem.amount);
+
             }
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace();

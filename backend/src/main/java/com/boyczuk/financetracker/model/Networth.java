@@ -18,7 +18,7 @@ public class Networth {
 
     public Networth() {}
 
-    public Networth(String dateString, double amount) {
+    public Networth(double amount, String dateString) {
         this.date = LocalDate.parse(dateString);
         this.amount = amount;
     }
