@@ -1,7 +1,9 @@
 package com.boyczuk.financetracker.service;
 
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -24,10 +26,17 @@ public class CalculateNetworth {
         List<Transaction> transactions = transactionRepository.findAllByOrderByDateDesc();
 
         double total = 0;
+        Map<LocalDate, Double> dailyNetworth = new LinkedHashMap<>();
 
         for (Transaction t : transactions) {
             total += t.amount;
-            Networth nw = new Networth(total, t.date.toString());
+            dailyNetworth.put(t.date, total);
+        }
+
+        networthRepository.deleteAll();
+
+        for (Map.Entry<LocalDate, Double> entry : dailyNetworth.entrySet()) {
+            Networth nw = new Networth(entry.getValue(), entry.getKey().toString());
             networthRepository.save(nw);
         }
 

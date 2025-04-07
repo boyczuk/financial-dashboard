@@ -36,16 +36,6 @@ public class CollectData {
         this.networthRepository = networthRepository;
     }
 
-    @GetMapping("/api/collect")
-    public String getData() {
-        return "Gathering csv file";
-    }
-
-    @PostMapping("/api/store")
-    public String putData() {
-        return "Putting data in PSQL DB";
-    }
-
     @GetMapping("/api/import")
     public ResponseEntity<String> getImportCSV() {
         InputStream inputStream = csvImportService.importCSV();
@@ -61,18 +51,15 @@ public class CollectData {
         return transactionRepository.findByDateBetweenOrderByDateDesc(start, end);
     }
 
-    // @GetMapping("/api/networth")
-    // public List<Networth> getNetworthHistory(
-    // @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    // LocalDate start,
-    // @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    // LocalDate end) {
-    // return networthRepository.findByDateBetween(start, end);
-    // }
-
     @GetMapping("/api/networth")
     public Optional getNetworth() {
         return networthRepository.findFirstByOrderByDateDesc();
+    }
+
+    @PostMapping("/api/recalculate")
+    public ResponseEntity<String> recalculate() {
+        calculateNetworth.generateNetworthHistory();
+        return ResponseEntity.ok("Net worth caluclated");
     }
 
     @GetMapping("/api/networthHistory")
