@@ -18,7 +18,7 @@ type Transaction = {
 const TransactionTable = () => {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
 
-    const startDate: string = "2025-01-01";
+    const startDate: string = "2023-01-01";
     const endDate: string = "2025-03-31";
 
     useEffect(() => {

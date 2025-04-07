@@ -2,6 +2,7 @@ package com.boyczuk.financetracker.controller.api;
 
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.boyczuk.financetracker.service.CSVImportService;
 import com.boyczuk.financetracker.service.CalculateNetworth;
+import com.boyczuk.financetracker.service.CalculateSpending;
 import com.boyczuk.financetracker.model.Networth;
 import com.boyczuk.financetracker.model.Transaction;
 import com.boyczuk.financetracker.repository.NetworthRepository;
@@ -26,11 +28,13 @@ public class CollectData {
     private final CalculateNetworth calculateNetworth;
     private final TransactionRepository transactionRepository;
     private final NetworthRepository networthRepository;
+    private final CalculateSpending calculateSpending;
 
-    public CollectData(CSVImportService csvImportService, CalculateNetworth calculateNetworth,
+    public CollectData(CSVImportService csvImportService, CalculateSpending calculateSpending, CalculateNetworth calculateNetworth,
             TransactionRepository transactionRepository,
             NetworthRepository networthRepository) {
         this.csvImportService = csvImportService;
+        this.calculateSpending = calculateSpending;
         this.calculateNetworth = calculateNetworth;
         this.transactionRepository = transactionRepository;
         this.networthRepository = networthRepository;
@@ -67,5 +71,10 @@ public class CollectData {
             @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
             @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
         return networthRepository.findByDateBetweenOrderByDateDesc(start, end);
+    }
+
+    @GetMapping("/api/monthlySpending")
+    public HashMap<Integer, Double> getMonthlySpending() {
+        return calculateSpending.thisYearMonthlySpending();
     }
 }
