@@ -57,6 +57,8 @@ HELP.md
 Thumbs.db
 backend/src/main/resources/cibc.csv
 backend/src/main/resources/cibc2.csv
+backend/src/main/resources/chequingAccount.csv
+backend/src/main/resources/savingsAccount.csv
 
 docker-compose.yml
 application.properties
