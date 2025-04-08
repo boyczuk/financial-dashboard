@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from "r
 import Investments from './pages/Investments';
 import Savings from './pages/Savings';
 import Transactions from './pages/Transactions';
+import Settings from './pages/Settings';
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 					<Route path="investments" element={<Investments />} />
 					<Route path="savings" element={<Savings />} />
 					<Route path="transactions" element={<Transactions />} />
+					<Route path="settings" element={<Settings />} />
 				</Routes>
 			</Router>
 

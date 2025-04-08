@@ -25,6 +25,8 @@ public class CSVImportService {
 
     public void saveToDB(InputStream inputStream) {
 
+        transactionRepository.deleteAll();
+        
         try (CSVReader reader = new CSVReader(new InputStreamReader(inputStream))) {
             String[] parts;
 

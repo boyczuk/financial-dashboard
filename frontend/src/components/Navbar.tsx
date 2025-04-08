@@ -2,6 +2,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import FlagIcon from '@mui/icons-material/Flag';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import './styles/Navbar.css';
@@ -24,6 +25,9 @@ const Navbar = () => {
                 </li>
                 <li>
                     <FlagIcon className={highlight === 3 ? 'navbar-icon-highlight' : 'navbar-icon'} onClick={() => {navigate("/transactions"); setHighlight(3) }} />
+                </li>
+                <li>
+                    <SettingsIcon className={highlight === 4 ? 'navbar-icon-highlight' : 'navbar-icon'} onClick={() => {navigate("/settings"); setHighlight(4) }} />
                 </li>
             </ul>
         </div>

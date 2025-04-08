@@ -17,9 +17,21 @@ type Transaction = {
 
 const TransactionTable = () => {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
+    const [selectedRange, setSelectedRange] = useState<'Yearly' | '6 Months' | 'Monthly' | 'Weekly'>('Monthly');
 
-    const startDate: string = "2023-01-01";
-    const endDate: string = "2025-03-31";
+
+    function formatDate(date: Date): string {
+        return date.toISOString().split('T')[0];
+    }
+
+    const currentDate: string = formatDate(new Date());
+
+    const oneYearAgoDateObj = new Date();
+    oneYearAgoDateObj.setFullYear(oneYearAgoDateObj.getFullYear() - 1);
+    const oneYearAgo: string = formatDate(oneYearAgoDateObj);
+
+    const startDate: string = oneYearAgo;
+    const endDate: string = currentDate;
 
     useEffect(() => {
         const fetchTransactions = async () => {
