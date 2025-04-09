@@ -16,43 +16,48 @@ import org.springframework.web.bind.annotation.RestController;
 import com.boyczuk.financetracker.service.CSVImportService;
 import com.boyczuk.financetracker.service.CalculateNetworth;
 import com.boyczuk.financetracker.service.CalculateSpending;
+import com.boyczuk.financetracker.model.ChequingTransaction;
 import com.boyczuk.financetracker.model.Networth;
+import com.boyczuk.financetracker.model.SavingsTransaction;
 import com.boyczuk.financetracker.model.Transaction;
 import com.boyczuk.financetracker.repository.NetworthRepository;
-import com.boyczuk.financetracker.repository.TransactionRepository;
+import com.boyczuk.financetracker.repository.SavingsRepository;
+import com.boyczuk.financetracker.repository.ChequingRepository;
 
 @RestController
 public class CollectData {
 
     private final CSVImportService csvImportService;
     private final CalculateNetworth calculateNetworth;
-    private final TransactionRepository transactionRepository;
+    private final SavingsRepository savingsRepository;
+    private final ChequingRepository chequingRepository;
     private final NetworthRepository networthRepository;
     private final CalculateSpending calculateSpending;
 
-    public CollectData(CSVImportService csvImportService, CalculateSpending calculateSpending, CalculateNetworth calculateNetworth,
-            TransactionRepository transactionRepository,
+    public CollectData(CSVImportService csvImportService, SavingsRepository savingsRepository,
+            CalculateSpending calculateSpending, CalculateNetworth calculateNetworth,
+            ChequingRepository chequingRepository,
             NetworthRepository networthRepository) {
         this.csvImportService = csvImportService;
         this.calculateSpending = calculateSpending;
+        this.savingsRepository = savingsRepository;
         this.calculateNetworth = calculateNetworth;
-        this.transactionRepository = transactionRepository;
+        this.chequingRepository = chequingRepository;
         this.networthRepository = networthRepository;
     }
 
-    @GetMapping("/api/import")
-    public ResponseEntity<String> getImportCSV() {
-        InputStream inputStream = csvImportService.importCSV();
-        csvImportService.saveToDB(inputStream);
-        calculateNetworth.generateNetworthHistory();
-        return ResponseEntity.ok("Import triggered");
-    }
-
-    @GetMapping("/api/transactions")
-    public List<Transaction> getTransactionsInRange(
+    @GetMapping("/api/chequing")
+    public List<ChequingTransaction> getChequing(
             @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
             @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
-        return transactionRepository.findByDateBetweenOrderByDateDesc(start, end);
+        return chequingRepository.findByDateBetweenOrderByDateDesc(start, end);
+    }
+
+    @GetMapping("/api/savings")
+    public List<SavingsTransaction> getSavings(
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+        return savingsRepository.findByDateBetweenOrderByDateDesc(start, end);
     }
 
     @GetMapping("/api/networth")
@@ -62,7 +67,7 @@ public class CollectData {
 
     @PostMapping("/api/recalculate")
     public ResponseEntity<String> recalculate() {
-        calculateNetworth.generateNetworthHistory();
+        //calculateNetworth.generateNetworthHistory();
         return ResponseEntity.ok("Net worth caluclated");
     }
 
@@ -73,8 +78,9 @@ public class CollectData {
         return networthRepository.findByDateBetweenOrderByDateDesc(start, end);
     }
 
-    @GetMapping("/api/monthlySpending")
-    public HashMap<Integer, Double> getMonthlySpending() {
-        return calculateSpending.thisYearMonthlySpending();
-    }
+    // @GetMapping("/api/monthlySpending")
+    // public HashMap<Integer, Double> getMonthlySpending() {
+    //     return calculateSpending.thisYearMonthlySpending();
+    // }
+
 }

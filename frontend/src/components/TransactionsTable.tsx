@@ -36,7 +36,7 @@ const TransactionTable = () => {
     useEffect(() => {
         const fetchTransactions = async () => {
             try {
-                const response = await axios.get<Transaction[]>(`/api/transactions?startDate=${startDate}&endDate=${endDate}`, {
+                const response = await axios.get<Transaction[]>(`/api/savings?startDate=${startDate}&endDate=${endDate}`, {
                     auth: DEV_AUTH,
                 });
                 const transactions = response.data;

@@ -3,35 +3,39 @@ package com.boyczuk.financetracker.service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import org.springframework.data.repository.query.CachingValueExpressionDelegate;
 import org.springframework.stereotype.Service;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
+import com.boyczuk.financetracker.model.ChequingTransaction;
+import com.boyczuk.financetracker.model.SavingsTransaction;
 import com.boyczuk.financetracker.model.Transaction;
-import com.boyczuk.financetracker.repository.TransactionRepository;
-
+import com.boyczuk.financetracker.repository.ChequingRepository;
+import com.boyczuk.financetracker.repository.SavingsRepository;
 
 @Service
 public class CSVImportService {
 
-    private final TransactionRepository transactionRepository;
+    private final ChequingRepository chequingRepository;
+    private final SavingsRepository savingsRepository;
 
-    public CSVImportService(TransactionRepository transactionRepository) {
-        this.transactionRepository = transactionRepository;
+    public CSVImportService(ChequingRepository chequingRepository, SavingsRepository savingsRepository) {
+        this.chequingRepository = chequingRepository;
+        this.savingsRepository = savingsRepository;
     }
 
-    public InputStream importCSV() {
-        return getClass().getClassLoader().getResourceAsStream("cibc2.csv");
-    }
+    public void saveToDB(InputStream inputStream, String accountName) {
+        if ("chequing".equalsIgnoreCase(accountName)) {
+            chequingRepository.deleteAll();
+        } else if ("savings".equalsIgnoreCase(accountName)) {
+            savingsRepository.deleteAll();
+        }
 
-    public void saveToDB(InputStream inputStream) {
-
-        transactionRepository.deleteAll();
-        
         try (CSVReader reader = new CSVReader(new InputStreamReader(inputStream))) {
             String[] parts;
 
             while ((parts = reader.readNext()) != null) {
-                // skip empty or malformed rows
                 if (parts.length < 3)
                     continue;
 
@@ -48,19 +52,18 @@ public class CSVImportService {
                         continue;
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("Skipping row due to invalid amount: " + String.join(",", parts));
+                    System.out.println("Skipping row: " + String.join(",", parts));
                     continue;
                 }
 
-                Transaction transaction = new Transaction(dateString, name, amount);
-                transactionRepository.save(transaction);
-                System.out.println(transaction.name + ": " + transaction.amount);
-
-
+                if ("chequing".equalsIgnoreCase(accountName)) {
+                    chequingRepository.save(new ChequingTransaction(dateString, name, amount));
+                } else if ("savings".equalsIgnoreCase(accountName)) {
+                    savingsRepository.save(new SavingsTransaction(dateString, name, amount));
+                }
             }
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace();
         }
-
     }
 }

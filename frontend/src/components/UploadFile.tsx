@@ -3,12 +3,16 @@ import { useDropzone } from "react-dropzone";
 import { DEV_AUTH } from "../constants";
 import axios from "axios";
 
+type UploadFileProps = {
+    accountName: string;
+}
 
-function CSVUpload() {
+function UploadFile({ accountName }: UploadFileProps) {
     const onDrop = useCallback(async (acceptedFiles: any[]) => {
         const file = acceptedFiles[0];
         const formData = new FormData();
         formData.append('file', file);
+        formData.append('account', accountName);
 
         try {
             const response = await axios.post('/api/upload', formData, {
@@ -25,7 +29,7 @@ function CSVUpload() {
             console.error("Error uploading file:", error);
             alert('Upload failed.')
         }
-    }, [])
+    }, [accountName])
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
     return (
@@ -47,4 +51,4 @@ function CSVUpload() {
     );
 }
 
-export default CSVUpload;
+export default UploadFile;

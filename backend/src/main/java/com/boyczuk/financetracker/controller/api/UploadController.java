@@ -24,9 +24,10 @@ public class UploadController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file, @RequestParam("account") String accountName) {
+        System.out.println("Received upload for account: " + accountName);
         try {
-            csvImportService.saveToDB(file.getInputStream());
+            csvImportService.saveToDB(file.getInputStream(), accountName);
             return ResponseEntity.ok("File processed properly.");
         } catch (IOException e) {
             return ResponseEntity.status(500).body("failed to process file.");

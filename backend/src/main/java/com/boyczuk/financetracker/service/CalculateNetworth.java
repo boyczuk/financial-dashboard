@@ -8,37 +8,37 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.boyczuk.financetracker.repository.NetworthRepository;
-import com.boyczuk.financetracker.repository.TransactionRepository;
+import com.boyczuk.financetracker.repository.ChequingRepository;
 import com.boyczuk.financetracker.model.Networth;
-import com.boyczuk.financetracker.model.Transaction;
+import com.boyczuk.financetracker.model.ChequingTransaction;
 
 @Service
 public class CalculateNetworth {
     private final NetworthRepository networthRepository;
-    private final TransactionRepository transactionRepository;
+    private final ChequingRepository chequingRepository;
 
-    public CalculateNetworth(TransactionRepository transactionRepository, NetworthRepository networthRepository) {
+    public CalculateNetworth(ChequingRepository chequingRepository, NetworthRepository networthRepository) {
         this.networthRepository = networthRepository;
-        this.transactionRepository = transactionRepository;
+        this.chequingRepository = chequingRepository;
     }
 
-    public void generateNetworthHistory() {
-        List<Transaction> transactions = transactionRepository.findAllByOrderByDateDesc();
+    // public void generateNetworthHistory() {
+    //     List<ChequingTransaction> transactions = chequingRepository.findAllByOrderByDateDesc();
 
-        double total = 0;
-        Map<LocalDate, Double> dailyNetworth = new LinkedHashMap<>();
+    //     double total = 0;
+    //     Map<LocalDate, Double> dailyNetworth = new LinkedHashMap<>();
 
-        for (Transaction t : transactions) {
-            total += t.amount;
-            dailyNetworth.put(t.date, total);
-        }
+    //     for (ChequingTransaction t : transactions) {
+    //         total += t.amount;
+    //         dailyNetworth.put(t.date, total);
+    //     }
 
-        networthRepository.deleteAll();
+    //     networthRepository.deleteAll();
 
-        for (Map.Entry<LocalDate, Double> entry : dailyNetworth.entrySet()) {
-            Networth nw = new Networth(entry.getValue(), entry.getKey().toString());
-            networthRepository.save(nw);
-        }
+    //     for (Map.Entry<LocalDate, Double> entry : dailyNetworth.entrySet()) {
+    //         Networth nw = new Networth(entry.getValue(), entry.getKey().toString());
+    //         networthRepository.save(nw);
+    //     }
 
-    }
+    // }
 }
