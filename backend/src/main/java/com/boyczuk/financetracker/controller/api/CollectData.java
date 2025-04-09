@@ -67,7 +67,7 @@ public class CollectData {
 
     @PostMapping("/api/recalculate")
     public ResponseEntity<String> recalculate() {
-        //calculateNetworth.generateNetworthHistory();
+        // calculateNetworth.generateNetworthHistory();
         return ResponseEntity.ok("Net worth caluclated");
     }
 
@@ -78,9 +78,9 @@ public class CollectData {
         return networthRepository.findByDateBetweenOrderByDateDesc(start, end);
     }
 
-    // @GetMapping("/api/monthlySpending")
-    // public HashMap<Integer, Double> getMonthlySpending() {
-    //     return calculateSpending.thisYearMonthlySpending();
-    // }
+    @GetMapping("/api/monthlySpending")
+    public HashMap<Integer, Double> getMonthlySpending() {
+        return calculateSpending.thisYearMonthlySpending();
+    }
 
 }

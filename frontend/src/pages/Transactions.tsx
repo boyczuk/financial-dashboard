@@ -2,9 +2,15 @@ import PieChart from '../components/PieChart';
 import TimeSeriesChart from '../components/TimeSeriesChart';
 import EnhancedTable from '../components/TopInvestments';
 import TransactionTable from '../components/TransactionsTable';
+import { useState } from 'react';
 import './styles/Transactions.css';
 
 function Transactions() {
+    const [selectedAccount, setSelectedAccount] = useState('chequing');
+
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedAccount(e.target.value);
+    };
 
 
     return (
@@ -14,7 +20,12 @@ function Transactions() {
             </div>
 
             <div className="content">
-                <TransactionTable />
+                <label htmlFor="account">Select Account:</label>
+                <select id="account" value={selectedAccount} onChange={handleChange}>
+                    <option value="chequing">Chequing</option>
+                    <option value="savings">Savings </option>
+                </select>
+                <TransactionTable accountType={selectedAccount} />
             </div>
         </div>
     )

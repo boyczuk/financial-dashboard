@@ -8,6 +8,10 @@ import {
 
 import { DEV_AUTH } from '../constants';
 
+type TTableProps = {
+    accountType: string;
+}
+
 type Transaction = {
     id: number;
     name: string;
@@ -15,7 +19,7 @@ type Transaction = {
     amount: number;
 }
 
-const TransactionTable = () => {
+const TransactionTable = ({ accountType }: TTableProps) => {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
     const [selectedRange, setSelectedRange] = useState<'Yearly' | '6 Months' | 'Monthly' | 'Weekly'>('Monthly');
 
@@ -36,7 +40,7 @@ const TransactionTable = () => {
     useEffect(() => {
         const fetchTransactions = async () => {
             try {
-                const response = await axios.get<Transaction[]>(`/api/savings?startDate=${startDate}&endDate=${endDate}`, {
+                const response = await axios.get<Transaction[]>(`/api/${accountType}?startDate=${startDate}&endDate=${endDate}`, {
                     auth: DEV_AUTH,
                 });
                 const transactions = response.data;
@@ -58,7 +62,7 @@ const TransactionTable = () => {
         }
 
         fetchTransactions();
-    }, []);
+    }, [accountType]);
 
     return (
         <TableContainer component={Paper} className='table-whole'>
