@@ -21,7 +21,7 @@ const TimeSeriesInvestments = () => {
     const [NWHistory, setNWHistory] = useState<Networth[]>([]);
     const [chartData, setChartData] = useState<ChartData<'line'>>();
     const [chartOptions, setChartOptions] = useState<ChartOptions<'line'>>();
-    const [selectedRange, setSelectedRange] = useState<'Yearly' | '6 Months' | 'Monthly' | 'Weekly'>('Monthly');
+    const [selectedRange, setSelectedRange] = useState<'All-time' | 'Yearly' | '6 Months' | 'Monthly' | 'Weekly'>('Monthly');
 
 
 
@@ -42,14 +42,18 @@ const TimeSeriesInvestments = () => {
             const last6Months = new Date(today);
             last6Months.setMonth(today.getMonth() - 6);
             startDate = last6Months.toISOString().slice(0, 10);
-        }  else if (selectedRange === 'Monthly') {
+        } else if (selectedRange === 'Monthly') {
             const lastMonth = new Date(today);
             lastMonth.setMonth(today.getMonth() - 1);
             startDate = lastMonth.toISOString().slice(0, 10);
-        }else if (selectedRange === 'Weekly') {
+        } else if (selectedRange === 'Weekly') {
             const lastWeek = new Date(today);
             lastWeek.setDate(today.getDate() - 7);
             startDate = lastWeek.toISOString().slice(0, 10);
+        } else if (selectedRange === "All-time") {
+            const allTime = new Date(today);
+            allTime.setFullYear(today.getFullYear() - 5);
+            startDate = allTime.toISOString().slice(0, 10);
         }
 
         const fetchNetworth = async () => {

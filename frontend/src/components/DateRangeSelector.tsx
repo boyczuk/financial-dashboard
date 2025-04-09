@@ -3,13 +3,13 @@ import './styles/DateRangeSelector.css';
 
 type Props = {
   selected: string;
-  onChange: (value: 'Yearly' | '6 Months' | 'Monthly' | 'Weekly') => void;
+  onChange: (value: 'All-time' | 'Yearly' | '6 Months' | 'Monthly' | 'Weekly') => void;
 };
 
 const DateRangeSelector = ({ selected, onChange }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleSelect = (range: 'Yearly' | '6 Months' | 'Monthly' | 'Weekly') => {
+  const handleSelect = (range: 'All-time' | 'Yearly' | '6 Months' | 'Monthly' | 'Weekly') => {
     onChange(range);
     setIsOpen(false);
   };
@@ -21,11 +21,11 @@ const DateRangeSelector = ({ selected, onChange }: Props) => {
       </button>
       {isOpen && (
         <ul className="dropdown-menu">
-          {['Yearly', '6 Months', 'Monthly', 'Weekly'].map((range) => (
+          {['All-time', 'Yearly', '6 Months', 'Monthly', 'Weekly'].map((range) => (
             <li key={range}>
               <button
                 className={`dropdown-item ${selected === range ? 'active' : ''}`}
-                onClick={() => handleSelect(range as 'Yearly' | '6 Months' | 'Monthly' | 'Weekly')}
+                onClick={() => handleSelect(range as 'All-time' | 'Yearly' | '6 Months' | 'Monthly' | 'Weekly')}
               >
                 {range}
               </button>

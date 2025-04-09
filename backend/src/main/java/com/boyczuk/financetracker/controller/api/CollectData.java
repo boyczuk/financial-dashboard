@@ -67,7 +67,7 @@ public class CollectData {
 
     @PostMapping("/api/recalculate")
     public ResponseEntity<String> recalculate() {
-        // calculateNetworth.generateNetworthHistory();
+        calculateNetworth.generateNetworthHistory();
         return ResponseEntity.ok("Net worth caluclated");
     }
 

@@ -18,6 +18,7 @@ public class CalculateSpending {
         this.chequingRepository = chequingRepository;
     }
 
+    // Logic needs fixing here
     public HashMap<Integer, Double> thisYearMonthlySpending() {
         LocalDate date = LocalDate.now();
         LocalDate yearAgo = date.minusYears(1);
