@@ -17,6 +17,7 @@ type Transaction = {
     name: string;
     date: string;
     amount: number;
+    category: string;
 }
 
 const TransactionTable = ({ accountType }: TTableProps) => {
@@ -81,7 +82,7 @@ const TransactionTable = ({ accountType }: TTableProps) => {
                             <TableCell>{transaction.name}</TableCell>
                             <TableCell>${transaction.amount}</TableCell>
                             <TableCell>{transaction.date}</TableCell>
-                            <TableCell>temp category</TableCell>
+                            <TableCell>{transaction.category}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

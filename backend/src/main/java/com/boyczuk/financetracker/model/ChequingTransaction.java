@@ -14,12 +14,14 @@ public class ChequingTransaction {
     public LocalDate date;
     public String name;
     public double amount;
+    public String category;
 
     public ChequingTransaction() {}
 
-    public ChequingTransaction(String dateString, String name, double amount) {
+    public ChequingTransaction(String dateString, String name, double amount, String category) {
         this.date = LocalDate.parse(dateString);;
         this.name = name;
         this.amount = amount;
+        this.category = category;
     }
 }

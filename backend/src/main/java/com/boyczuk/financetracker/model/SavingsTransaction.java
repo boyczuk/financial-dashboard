@@ -14,12 +14,14 @@ public class SavingsTransaction {
     public LocalDate date;
     public String name;
     public double amount;
+    public String category;
 
     public SavingsTransaction() {}
 
-    public SavingsTransaction(String dateString, String name, double amount) {
+    public SavingsTransaction(String dateString, String name, double amount, String category) {
         this.date = LocalDate.parse(dateString);;
         this.name = name;
         this.amount = amount;
+        this.category = category;
     }
 }
